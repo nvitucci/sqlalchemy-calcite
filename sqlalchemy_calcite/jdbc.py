@@ -14,25 +14,22 @@ class CalciteDialectJdbc(CalciteDialect):
 
     @classmethod
     def dbapi(cls):
-        args = "-Djava.class.path=%s" % os.environ["CLASSPATH"]
+        return dbapi2
+
+    def connect(self, *cargs, **cparams):
+        args = "-Djava.class.path=%s" % cparams["classpath"]
         jvm_path = jpype.getDefaultJVMPath()
         jpype.startJVM(jvm_path, args)
 
-        return dbapi2
+        return self.dbapi.connect(*cargs, **cparams)
 
     def initialize(self, connection):
         super(CalciteDialectJdbc, self).initialize(connection)
 
     def create_connect_args(self, url):
-        model_path = str(url).split("://", 1)[1]
-
-        kwargs = {
+        conn_kwargs = {
             "dsn": "jdbc:calcite:",
             "driver": JDBC_DRIVER_NAME,
-            "driver_args": {
-                "model": model_path,
-                "lex": "JAVA"
-            },
         }
 
-        return (), kwargs
+        return (), conn_kwargs
