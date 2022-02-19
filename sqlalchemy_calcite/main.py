@@ -14,7 +14,7 @@ if __name__ == "__main__":
     os.environ["JAVA_HOME"] = "/usr/lib/jvm/java-1.8.0-openjdk/"
     os.environ["CLASSPATH"] = jar
 
-    conn_string = "/data/code/git/calcite-sparql/examples/java/src/main/resources/modelClassRemote.json"
+    conn_string = "modelClassRemote.json"
     dialect = "calcite+jdbc://"
     engine = create_engine(dialect + conn_string)
 
