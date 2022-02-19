@@ -24,12 +24,15 @@ class CalciteDialectJdbc(CalciteDialect):
         super(CalciteDialectJdbc, self).initialize(connection)
 
     def create_connect_args(self, url):
-        model_path = str(url).split("://")[1]
+        model_path = str(url).split("://", 1)[1]
 
         kwargs = {
-            "dsn": "jdbc:calcite:model=" + model_path,
+            "dsn": "jdbc:calcite:",
             "driver": JDBC_DRIVER_NAME,
-            "driver_args": {"lex": "JAVA"},
+            "driver_args": {
+                "model": model_path,
+                "lex": "JAVA"
+            },
         }
 
         return (), kwargs
