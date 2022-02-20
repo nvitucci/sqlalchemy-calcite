@@ -19,6 +19,10 @@ class CalciteDialectJdbc(CalciteDialect):
     def connect(self, *cargs, **cparams):
         args = "-Djava.class.path=%s" % cparams["classpath"]
         jvm_path = jpype.getDefaultJVMPath()
+
+        if (jpype.isJVMStarted()):
+            jpype.shutdownJVM()
+
         jpype.startJVM(jvm_path, args)
 
         return self.dbapi.connect(*cargs, **cparams)
