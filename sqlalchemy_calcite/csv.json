@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultSchema": "csv",
+  "schemas": [
+    {
+      "type": "custom",
+      "name": "csv",
+      "factory": "org.apache.calcite.adapter.csv.CsvSchemaFactory",
+      "operand": {
+        "directory": "/tmp/csv"
+      }
+    }
+  ]
+}
